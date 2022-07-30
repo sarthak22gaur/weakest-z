@@ -12,7 +12,7 @@ type TechnologyCardProps = {
 };
 
 const Home: NextPage = () => {
-  const { data: fighters, isLoading, refetch } = trpc.useQuery(["fighters.getFighter"], {
+  const { data: fighters, isLoading, refetch } = trpc.useQuery(["voting.getFighter"], {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

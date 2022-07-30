@@ -7,7 +7,7 @@ import {
 } from "../utils/trpc";
 
 type fighterFromServer =
-  inferQueryOutput<"fighters.getFighter">["firstFighter"];
+  inferQueryOutput<"voting.getFighter">["firstFighter"];
 
 
 const VotingBooth: React.FC<{
@@ -15,7 +15,7 @@ const VotingBooth: React.FC<{
   secondFighter: fighterFromServer;
   refetch: () => void;
 }> = (props) => {
-  const voteMutation = trpc.useMutation(["fighters.vote"]);
+  const voteMutation = trpc.useMutation(["voting.vote"]);
 
   const castVote = (id: number) => {
     if (!props.firstFighter || !props.secondFighter) {

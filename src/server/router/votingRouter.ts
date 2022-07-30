@@ -3,7 +3,7 @@ import { getContestants } from "../../utils/getContestants";
 import { z } from "zod";
 import { prisma } from "../db/client";
 
-export const exampleRouter = createRouter()
+export const votingRouter = createRouter()
   .query("getFighter", {
     async resolve() {
       const [firstFighter, secondFighter] = getContestants();
