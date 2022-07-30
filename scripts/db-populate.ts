@@ -20,10 +20,12 @@ const populate = async () => {
         name: (p as { Name: string }).Name,
         img_url: (p as { ImageURL: string }).ImageURL,
       }));
+
+      // console.log(formattedPokemon);
       const created = await prisma.dbz.createMany({
         data: formattedPokemon,
       });
-      console.log(created);
+      // console.log(created);
 
     },
   });
