@@ -12,7 +12,7 @@ type TechnologyCardProps = {
 };
 
 const Home: NextPage = () => {
-  const { data: fighters, isLoading } = trpc.useQuery(["fighters.getFighter"], {
+  const { data: fighters, isLoading, refetch } = trpc.useQuery(["fighters.getFighter"], {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -34,13 +34,15 @@ const Home: NextPage = () => {
         <h1 className="text-2xl font-medium p-4 bg-slate-600 text-white text-right">
           <Link href="/">Results</Link>
         </h1>
-        <main className="container flex flex-col items-center gap-16 h-full p-4">
+        <main className="container flex flex-col items-center gap-4 h-full p-4">
           <h1 className="text-5xl leading-normal font-extrabold text-gray-700">
             Who is the weakest
           </h1>
+          <p>click the image to vote</p>
           <VotingBooth
             firstFighter={fighters?.firstFighter}
             secondFighter={fighters?.secondFighter}
+            refetch={() => refetch()}
           />
           <div></div>
         </main>

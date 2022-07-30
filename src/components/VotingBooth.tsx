@@ -13,6 +13,7 @@ type fighterFromServer =
 const VotingBooth: React.FC<{
   firstFighter: fighterFromServer;
   secondFighter: fighterFromServer;
+  refetch: () => void;
 }> = (props) => {
   const voteMutation = trpc.useMutation(["fighters.vote"]);
 
@@ -22,22 +23,28 @@ const VotingBooth: React.FC<{
     }
 
     if (props.firstFighter.id === id) {
-      voteMutation.mutate(["fighters.vote", { fighterId: props.firstFighter.id }]);
+      voteMutation.mutate({
+        voteAgainst: props.secondFighter.id,
+        voteFor: props.firstFighter.id,
+      });
      
     } else {
+      voteMutation.mutate({
+        voteAgainst: props.firstFighter.id,
+        voteFor: props.secondFighter.id,
+      });
     }
+    props.refetch();
   };
-
-  // const fetchingNext = voteMutation.isLoading || isLoading;
 
   return (
     <>
       {props.firstFighter && props.secondFighter && (
-        <ul className="flex flex-row gap-16 justify-around items-center text-5xl">
+        <ul className="flex flex-row gap-16  mt-12 justify-around items-center text-5xl">
           <FighterItem
             fighter={props.firstFighter}
             vote={() => castVote(props.firstFighter.id)}
-            disabled={true}
+            disabled={voteMutation.isLoading}
           />
           <li>
             <button>vs</button>
@@ -45,7 +52,7 @@ const VotingBooth: React.FC<{
           <FighterItem
             fighter={props.secondFighter}
             vote={() => castVote(props.secondFighter.id)}
-            disabled={true}
+            disabled={voteMutation.isLoading}
           />
         </ul>
       )}
@@ -60,7 +67,7 @@ const FighterItem: React.FC<{
 }> = (props) => {
   return (
     <li className="flex flex-col flex-shrink items-center gap-4 text-2xl rounded font-regular w-80 h-96 text-center">
-      <button>
+      <button onClick={() => props.vote()}>
         <Image
           className="rounded-2xl"
           width="250px"

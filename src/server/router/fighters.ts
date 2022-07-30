@@ -3,8 +3,6 @@ import { getContestants } from "../../utils/getContestants";
 import { z } from "zod";
 import { prisma } from "../db/client";
 
-
-
 export const exampleRouter = createRouter()
   .query("getFighter", {
     async resolve() {
@@ -32,10 +30,16 @@ export const exampleRouter = createRouter()
     }),
     async resolve({ input, ctx }) {
 
-      if(!ctx.req){
+      if(!input){
         throw new Error("Send vote data");
       }
       const { voteFor, voteAgainst } = input;
-      const result = await prisma.vote.create({})
+      const result = await prisma.vote.create({
+        data: {
+          votedAgainstId: voteAgainst,
+          votedForId: voteFor,
+        },
+      })
+      return {vote: result};
     },
   });
