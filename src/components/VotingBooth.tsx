@@ -62,7 +62,7 @@ const FighterItem: React.FC<{
 }> = (props) => {
   return (
     <>
-      <li className="flex flex-col md:grayscale-[60%] hover:grayscale-0 hover:text-orange-500 md:hover:scale-[1.05] transition-all justify-center items-center gap-4 text-2xl rounded font-regular w-80 text-center cursor-pointer">
+      <li className="flex flex-col md:grayscale-[60%] hover:grayscale-0 md:hover:text-orange-500 md:hover:scale-[1.05] transition-all justify-center items-center gap-4 text-2xl rounded font-regular w-80 text-center cursor-pointer">
         <div className="relative w-36 md:w-72 h-48 md:h-96">
           <Image
             className="rounded-2xl relative"
