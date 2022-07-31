@@ -1,77 +1,54 @@
-import Navbar from "../components/Navbar";
-import Loading from "../components/Loading";
+import LeaderboardList from "../components/LeaderboardList";
 import Image from "next/image";
 
-const Results = () => {
+import { appRouter } from "../server/router";
+import superjson from "superjson";
+import { trpc } from "../utils/trpc";
+import { createSSGHelpers } from "@trpc/react/ssg";
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
+import Navbar from "../components/Navbar";
+
+export async function getStaticProps() {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson, // optional - adds superjson serialization
+  });
+
+  const leaderboard = await ssg.fetchQuery("result.getResults");
+  //   console.log(leaderboard);
+  return {
+    props: { trpcState: ssg.dehydrate(), leaderboard },
+    revalidate: 21600,
+  };
+}
+
+export type leaderBoardType = InferGetStaticPropsType<typeof getStaticProps>;
+
+export default function ResultsPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
+  const { leaderboard } = props;
+  const resultQuery = trpc.useQuery(["result.getResults"]);
+
+  if (resultQuery.status !== "success") {
+    return <>Loading...</>;
+  }
+  const { data } = resultQuery;
+  //   console.log(data);
   return (
     <>
       <Navbar />
-      <div>
-        <h1 className="text-center text-5xl">Results</h1>
-        <Podium />
+      <h1 className="text-3xl p-4 font-bold text-center">Leaderboards 😂</h1>
+      <div className="flex justify-center items-center">
+      <LeaderboardList data={data} />
       </div>
     </>
   );
-};
+}
 
-const Podium = () => {
-  return (
-    <>
-      <ul className="flex justify-center gap-16 h-52">
-        <li className="flex flex-col justify-end text-center">
-          <p>3</p>
-          <Image
-            className="rounded-2xl"
-            width="100px"
-            height="100px"
-            src="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-            alt=""
-          />
-          <p>Test</p>
-        </li>
-        <li className="flex flex-col justify-start text-center">
-          <p>1</p>
-          <Image
-            className="rounded-2xl "
-            width="100px"
-            height="100px"
-            src="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-            alt=""
-          />
-          <p>Test</p>
-        </li>
-        <li className="flex flex-col justify-center text-center">
-          <p>2</p>
-          <Image
-            className="rounded-2xl"
-            width="100px"
-            height="100px"
-            src="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-            alt=""
-          />
-          <p>Test</p>
-        </li>
-      </ul>
-    </>
-  );
-};
-
-const PodPlace = () => {
-  return (
-    <>
-      <li className="flex flex-col justify-center text-center">
-        <p>2</p>
-        <Image
-          className="rounded-2xl"
-          width="100px"
-          height="100px"
-          src="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-          alt=""
-        />
-        <p>Test</p>
-      </li>
-    </>
-  );
-};
-
-export default Results;
+// export default ResultsPage;
