@@ -6,9 +6,7 @@ import {
   inferQueryOutput,
 } from "../utils/trpc";
 
-type fighterFromServer =
-  inferQueryOutput<"voting.getFighter">["firstFighter"];
-
+type fighterFromServer = inferQueryOutput<"voting.getFighter">["firstFighter"];
 
 const VotingBooth: React.FC<{
   firstFighter: fighterFromServer;
@@ -27,7 +25,6 @@ const VotingBooth: React.FC<{
         voteAgainst: props.secondFighter.id,
         voteFor: props.firstFighter.id,
       });
-     
     } else {
       voteMutation.mutate({
         voteAgainst: props.firstFighter.id,
@@ -40,21 +37,19 @@ const VotingBooth: React.FC<{
   return (
     <>
       {props.firstFighter && props.secondFighter && (
-        <ul className="flex flex-col md:flex-row gap-4 justify-center mt-12 text-white items-center text-5xl">
+        <div className="flex flex-col md:flex-row gap-4 h-fit justify-center mt-12 text-white items-center text-5xl">
           <FighterItem
             fighter={props.firstFighter}
             vote={() => castVote(props.firstFighter.id)}
             disabled={voteMutation.isLoading}
           />
-          <li className="m-4 p-4 text-black">
-            vs
-          </li>
+          <span className="text-black">vs</span>
           <FighterItem
             fighter={props.secondFighter}
             vote={() => castVote(props.secondFighter.id)}
             disabled={voteMutation.isLoading}
           />
-        </ul>
+        </div>
       )}
     </>
   );
@@ -66,19 +61,22 @@ const FighterItem: React.FC<{
   disabled: boolean;
 }> = (props) => {
   return (
-    <li className="flex flex-col md:grayscale-[60%] hover:grayscale-0 hover:text-orange-500 hover:scale-[1.05] transition-all flex-shrink items-center gap-4 text-2xl rounded font-regular w-80 h-96 text-center">
-      <button onClick={() => props.vote()}>
-        <Image
-          className="rounded-2xl w-fit h-fit"
-          width="250px"
-          height="350px"
-
-          src={props.fighter?.img_url}
-          alt=""
-        />
-      </button>
-      <span>{props.fighter?.name}</span>
-    </li>
+    <>
+      <li className="flex flex-col md:grayscale-[60%] hover:grayscale-0 hover:text-orange-500 md:hover:scale-[1.05] transition-all justify-center items-center gap-4 text-2xl rounded font-regular w-80 text-center cursor-pointer">
+        <div className="relative w-36 md:w-72 h-48 md:h-96">
+          <Image
+            className="rounded-2xl relative"
+            layout="fill"
+            onClick={() => props.vote()}
+            src={props.fighter?.img_url}
+            alt=""
+          />
+        </div>
+        <div>
+          <h2>{props.fighter?.name}</h2>
+        </div>
+      </li>
+    </>
   );
 };
 
