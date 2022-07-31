@@ -17,7 +17,7 @@ const Navbar = () => {
           </div>
         </Link>
         
-          <ul className="flex w-full gap-8 px-8 justify-end items-center">
+          <ul className="flex w-full gap-8  justify-end items-center">
           <Link href="/results">
             <li className="border-2 flex items-center justify-center text-white border-orange-500 p-2 m-2 hover:text-orange-500 hover:bg-white rounded">
               <h1 className="text-2xl font-medium cursor-pointer">Results</h1>

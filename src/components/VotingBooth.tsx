@@ -40,14 +40,14 @@ const VotingBooth: React.FC<{
   return (
     <>
       {props.firstFighter && props.secondFighter && (
-        <ul className="flex flex-row gap-4 justify-center mt-12 text-white  items-center text-5xl">
+        <ul className="flex flex-col md:flex-row gap-4 justify-center mt-12 text-white items-center text-5xl">
           <FighterItem
             fighter={props.firstFighter}
             vote={() => castVote(props.firstFighter.id)}
             disabled={voteMutation.isLoading}
           />
-          <li>
-            <button>vs</button>
+          <li className="m-4 p-4 text-black">
+            vs
           </li>
           <FighterItem
             fighter={props.secondFighter}
@@ -66,12 +66,13 @@ const FighterItem: React.FC<{
   disabled: boolean;
 }> = (props) => {
   return (
-    <li className="flex flex-col flex-shrink items-center gap-4 text-2xl rounded font-regular w-80 h-96 text-center">
+    <li className="flex flex-col md:grayscale-[60%] hover:grayscale-0 hover:text-orange-500 hover:scale-[1.05] transition-all flex-shrink items-center gap-4 text-2xl rounded font-regular w-80 h-96 text-center">
       <button onClick={() => props.vote()}>
         <Image
-          className="rounded-2xl"
+          className="rounded-2xl w-fit h-fit"
           width="250px"
           height="350px"
+
           src={props.fighter?.img_url}
           alt=""
         />

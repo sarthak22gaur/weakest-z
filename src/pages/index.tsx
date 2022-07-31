@@ -32,15 +32,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      
       {isLoading && (<Loading />)}
-
+      <Navbar />
       {!isLoading &&
         fighters &&
         fighters.firstFighter &&
         fighters.secondFighter && (
+          <>
+ 
           <main className="flex flex-col justify-center items-center gap-2 h-full m-2 p-2">
-            <h1 className="text-5xl leading-normal font-extrabold text-gray-300">
+            
+            <h1 className="text-5xl text-center leading-normal font-extrabold text-gray-300">
               Who is the weakest
             </h1>
             <p className="text-gray-500">choose the weaker character</p>
@@ -50,6 +53,7 @@ const Home: NextPage = () => {
               refetch={() => refetch()}
             />
           </main>
+          </>
         )}
     </>
   );
