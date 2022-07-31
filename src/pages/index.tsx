@@ -39,7 +39,7 @@ const Home: NextPage = () => {
         fighters &&
         fighters.firstFighter &&
         fighters.secondFighter && (
-          <main className="container flex flex-col items-center gap-2 h-full p-2">
+          <main className="flex flex-col justify-center items-center gap-2 h-full m-2 p-2">
             <h1 className="text-5xl leading-normal font-extrabold text-gray-700">
               Who is the weakest
             </h1>
@@ -49,7 +49,6 @@ const Home: NextPage = () => {
               secondFighter={fighters?.secondFighter}
               refetch={() => refetch()}
             />
-            <div></div>
           </main>
         )}
     </>
