@@ -40,7 +40,7 @@ const VotingBooth: React.FC<{
   return (
     <>
       {props.firstFighter && props.secondFighter && (
-        <ul className="flex flex-row gap-4 justify-center mt-12  items-center text-5xl">
+        <ul className="flex flex-row gap-4 justify-center mt-12 text-white  items-center text-5xl">
           <FighterItem
             fighter={props.firstFighter}
             vote={() => castVote(props.firstFighter.id)}

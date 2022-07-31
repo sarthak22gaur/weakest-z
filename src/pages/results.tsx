@@ -1,5 +1,6 @@
 import LeaderboardList from "../components/LeaderboardList";
 import Image from "next/image";
+import { createContext } from "../server/router/context";
 
 import { appRouter } from "../server/router";
 import superjson from "superjson";
@@ -15,7 +16,7 @@ import Navbar from "../components/Navbar";
 export async function getStaticProps() {
   const ssg = createSSGHelpers({
     router: appRouter,
-    ctx: {},
+    ctx: createContext(),
     transformer: superjson, // optional - adds superjson serialization
   });
 

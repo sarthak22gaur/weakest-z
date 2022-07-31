@@ -40,10 +40,10 @@ const Home: NextPage = () => {
         fighters.firstFighter &&
         fighters.secondFighter && (
           <main className="flex flex-col justify-center items-center gap-2 h-full m-2 p-2">
-            <h1 className="text-5xl leading-normal font-extrabold text-gray-700">
+            <h1 className="text-5xl leading-normal font-extrabold text-gray-300">
               Who is the weakest
             </h1>
-            <p>choose the weaker character</p>
+            <p className="text-gray-500">choose the weaker character</p>
             <VotingBooth
               firstFighter={fighters?.firstFighter}
               secondFighter={fighters?.secondFighter}
