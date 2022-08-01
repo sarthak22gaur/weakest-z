@@ -12,6 +12,7 @@ import {
   InferGetStaticPropsType,
 } from "next";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export async function getStaticProps() {
   const ssg = createSSGHelpers({
@@ -44,10 +45,13 @@ export default function ResultsPage(
   return (
     <>
       <Navbar />
-      <h1 className="text-3xl p-4 font-bold text-center">Leaderboards 😂</h1>
-      <div className="flex justify-center items-center">
-      <LeaderboardList data={data} />
-      </div>
+      {/* <div className="relative"> */}
+        <h1 className="text-3xl p-4 font-bold text-center">Leaderboards 😂</h1>
+        <div className="flex justify-center items-center">
+          <LeaderboardList data={data} />
+        </div>
+      {/* </div> */}
+      <Footer />
     </>
   );
 }

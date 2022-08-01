@@ -4,6 +4,7 @@ import Image from "next/image";
 import { trpc } from "../utils/trpc";
 import VotingBooth from "../components/VotingBooth";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import Link from "next/link";
 
@@ -32,17 +33,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
-      {isLoading && (<Loading />)}
+      {isLoading && <Loading />}
       <Navbar />
       {!isLoading &&
         fighters &&
         fighters.firstFighter &&
         fighters.secondFighter && (
-          <>
- 
           <main className="flex flex-col justify-center items-center gap-2 h-full m-2 p-2">
-            
             <h1 className="text-5xl text-center leading-normal font-extrabold text-gray-300">
               Who is the weakest
             </h1>
@@ -53,8 +50,8 @@ const Home: NextPage = () => {
               refetch={() => refetch()}
             />
           </main>
-          </>
         )}
+      <Footer />
     </>
   );
 };
