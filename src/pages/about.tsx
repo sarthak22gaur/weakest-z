@@ -1,5 +1,5 @@
-import Navbar from "../components/Navbar";
-import { FaGithub } from "react-icons/fa";
+import Navbar from '../components/Navbar';
+import { FaGithub } from 'react-icons/fa';
 
 export default function AboutPage() {
   return (
@@ -8,7 +8,7 @@ export default function AboutPage() {
       {/* <div className="relative"> */}
       <div className="flex justify-center">
         <div className="flex flex-col items-center max-w-lg text-justify leading-9 text-gray-400 text-2xl m-4 p-4">
-          <div className="">
+          <div>
             <h1 className="font-bold text-3xl">Why?</h1>
             <p className="pt-4 text-white">
               Cuz everyone knows Chichi is the strongest, so it was time to find
@@ -16,7 +16,10 @@ export default function AboutPage() {
             </p>
             <span className="text-xl flex items-center gap-4 my-4">
               Find source code here 👉🏻
-              <a className="text-cyan-500" href="https://github.com/sarthak22gaur/weakest-z">
+              <a
+                className="text-cyan-500"
+                href="https://github.com/sarthak22gaur/weakest-z"
+              >
                 <FaGithub size={22} />
               </a>
             </span>
@@ -28,7 +31,7 @@ export default function AboutPage() {
             </h1>
 
             <p className="text-lg">
-              Learn more at 👉🏻{" "}
+              Learn more at 👉🏻{' '}
               <a
                 className="text-cyan-500 font-semibold"
                 href="https://init.tips/"
@@ -39,8 +42,7 @@ export default function AboutPage() {
           </div>
           <div className="mt-16 text-lg">
             <p>
-              Inspired from Theo&apos;s roundest pokemon polling site that he
-              built during one of his livestreams👉🏻{" "}
+              Inspired from 👉🏻{' '}
               <span className="font-bold tracking-wide">
                 <a className="text-cyan-500" href="https://roundest.t3.gg/">
                   roundest.t3.gg

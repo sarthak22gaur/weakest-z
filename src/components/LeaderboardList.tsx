@@ -1,16 +1,9 @@
-import Image from "next/image";
-import type { leaderBoardType } from "../pages/results";
+import Image from 'next/image';
+import { inferQueryOutput } from '../utils/trpc';
 
+type result = inferQueryOutput<'result.getResults'>;
 const LeaderboardList: React.FC<{
-  data: {
-    id: number;
-    name: string;
-    img_url: string;
-    _count: {
-      votesFor: number;
-      votesAgainst: number;
-    };
-  }[];
+  data: result;
 }> = (props) => {
   const scoreData = props.data.map((item) => {
     let score = 0;
@@ -27,11 +20,12 @@ const LeaderboardList: React.FC<{
   });
   scoreData.sort((a, b) => b.score - a.score);
   const podium = scoreData.slice(0, 3);
-  console.log(podium);
+  const lb = scoreData.slice(3);
 
   return (
     <div className="grid border-2 max-w-2xl justify-center items-center ">
-      {scoreData.map((curr, index) => {
+      <ResultsPodium fighter={podium} />
+      {lb.map((curr, index) => {
         return (
           <ListItem
             name={curr.name}
@@ -46,30 +40,45 @@ const LeaderboardList: React.FC<{
 };
 
 export const ResultsPodium: React.FC<{
-  fighter: leaderBoardType["leaderboard"][number];
+  fighter: Array<{ name: string; url: string; score: number }>;
 }> = (props) => {
   return (
-    <div className="flex justify-center gap-16 h-96 pt-16">
+    <div className="flex justify-center items-end">
       <div className="flex flex-col justify-center text-center">
         <PodPlace
-          url="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-          name="Test 1"
-          position="👑👑"
+          url={
+            props.fighter[1]?.url
+              ? props.fighter[1].url
+              : 'https://cdn.myanimelist.net/images/characters/10/238647.jpg'
+          }
+          name={props.fighter[1]?.name ? props.fighter[1].name : '!'}
+          position="🥈"
         />
+        <div className="h-12 bg-orange-400"></div>
       </div>
-      <div className="flex  flex-col justify-start text-center">
+      <div className="flex flex-col justify-start text-center">
         <PodPlace
-          url="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-          name="Test 2"
-          position="👑👑👑"
+          url={
+            props.fighter[0]?.url
+              ? props.fighter[0].url
+              : 'https://cdn.myanimelist.net/images/characters/10/238647.jpg'
+          }
+          name={props.fighter[0]?.name ? props.fighter[0].name : '!'}
+          position="🥇"
         />
+        <div className="h-24 bg-orange-400"></div>
       </div>
       <div className="flex flex-col justify-end text-center">
         <PodPlace
-          url="https://cdn.myanimelist.net/images/characters/10/238647.jpg"
-          name="Test 3"
-          position="👑"
+          url={
+            props.fighter[2]?.url
+              ? props.fighter[2].url
+              : 'https://cdn.myanimelist.net/images/characters/10/238647.jpg'
+          }
+          name={props.fighter[2]?.name ? props.fighter[2].name : '!'}
+          position="🥉"
         />
+        <div className="h-4 bg-orange-400"></div>
       </div>
     </div>
   );
@@ -79,17 +88,17 @@ const PodPlace: React.FC<{ position: string; name: string; url: string }> = (
   props
 ) => {
   return (
-    <>
-      <p>{props.position}</p>
+    <div className="p-2 w-fit">
+      <p className="text-3xl pb-2">{props.position}</p>
       <Image
-        className="rounded-2xl"
-        width="150px"
-        height="200px"
+        className="rounded-full"
+        width="100px"
+        height="150px"
         src={props.url}
         alt=""
       />
-      <p className="pt-4 text-xl font-medium">{props.name}</p>
-    </>
+      <p className="text-xl font-medium">{props.name}</p>
+    </div>
   );
 };
 
@@ -108,7 +117,9 @@ const ListItem: React.FC<{ score: number; name: string; url: string }> = (
         />
         <p className="justify-center">{props.name}</p>
       </div>
-      <p className="text-xl font-medium justify-end">{props.score.toFixed(2)}</p>
+      <p className="text-xl font-medium justify-end">
+        {props.score.toFixed(2)}
+      </p>
     </div>
   );
 };

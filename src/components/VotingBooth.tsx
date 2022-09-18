@@ -1,19 +1,24 @@
-import Image from "next/image";
-import { trpc } from "..//utils/trpc";
+import Image from 'next/image';
+import { trpc } from '..//utils/trpc';
 import {
   inferMutationInput,
   inferMutationOutput,
   inferQueryOutput,
-} from "../utils/trpc";
+} from '../utils/trpc';
 
-type fighterFromServer = inferQueryOutput<"voting.getFighter">["firstFighter"];
+type fighterFromServer = inferQueryOutput<'voting.getFighter'>['firstFighter'];
 
 const VotingBooth: React.FC<{
   firstFighter: fighterFromServer;
   secondFighter: fighterFromServer;
   refetch: () => void;
 }> = (props) => {
-  const voteMutation = trpc.useMutation(["voting.vote"]);
+  const trpcCtx = trpc.useContext();
+  const voteMutation = trpc.useMutation(['voting.vote'], {
+    onSuccess: () => {
+      trpcCtx.invalidateQueries(['result.getResults']);
+    },
+  });
 
   const castVote = (id: number) => {
     if (!props.firstFighter || !props.secondFighter) {
